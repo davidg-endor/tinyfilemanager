@@ -10,7 +10,7 @@ pipeline {
                 script {
                     currentBuild.displayName = params.version
                 }
-                archiveArtifacts artifacts:'assets,Dockerfile,tinyfilemanager.php'
+                archiveArtifacts artifacts:'assets/**,Dockerfile,tinyfilemanager.php'
             }
         }
         
