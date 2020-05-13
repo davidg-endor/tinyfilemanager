@@ -86,7 +86,7 @@ $favicon_path = '?img=favicon';
 
 // Files and folders to excluded from listing
 // e.g. array('myfile.html', 'personal-folder', '*.php', ...)
-$exclude_items = array('tinyfilemanager.php', 'tinyfilemanager/');
+$exclude_items = array('tinyfilemanager.php', 'assets/');
 
 // Online office Docs Viewer
 // Availabe rules are 'google', 'microsoft' or false
