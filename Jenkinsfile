@@ -18,7 +18,6 @@ pipeline {
             steps {
                 build job: 'dockerBuild', parameters: [
                     string(name: 'componentName', value: 'tinyfilemanager'),
-                    string(name: 'archivePath', value: '.'),
                     string(name: 'componentVersion', value: params.version)
                 ]
             }
