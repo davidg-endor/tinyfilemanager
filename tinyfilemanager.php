@@ -86,7 +86,7 @@ $favicon_path = '?img=favicon';
 
 // Files and folders to excluded from listing
 // e.g. array('myfile.html', 'personal-folder', '*.php', ...)
-$exclude_items = array('tinyfilemanager.php', 'assets/');
+$exclude_items = array('tinyfilemanager.php', 'assets');
 
 // Online office Docs Viewer
 // Availabe rules are 'google', 'microsoft' or false
@@ -126,10 +126,8 @@ $ip_blacklist = array(
     '::'            // non-routable meta ipv6
 );
 
-if (preg_match('/\.(?:html|css|js|woff2|woff|ttf)(\?v=4\.7\.0)?$/', $_SERVER["REQUEST_URI"])) {
-    if (preg_match('/\?p=.*&view=.*/', $_SERVER["REQUEST_URI"])) {
-        fm_redirect(preg_replace('/\?p=.*&view=/', '', $_SERVER["REQUEST_URI"]));
-    }
+// When using direct link to file and not folder, return it as it
+if ((!isset($_GET['p'])) && (!preg_match('/.*\/$/', $_SERVER["REQUEST_URI"]))) {
     return false;
 }
 
@@ -364,7 +362,15 @@ define('FM_IS_WIN', DIRECTORY_SEPARATOR == '\\');
 
 // always use ?p=
 if (!isset($_GET['p']) && empty($_FILES)) {
-    fm_redirect(FM_SELF_URL . '?p=');
+    // If the request is for sub dirs redirect them back to root with p param 
+    // and value of the uri path. Remove uri from FM_SELF_URL
+    // On root page don't remove uri path
+    if ($_SERVER["REQUEST_URI"] != '/') {
+        $tmp_url = str_replace($_SERVER["REQUEST_URI"],'',FM_SELF_URL);
+    } else {
+        $tmp_url = FM_SELF_URL;
+    }
+    fm_redirect($tmp_url . '?p=' . $_SERVER["REQUEST_URI"]);
 }
 
 // get path
