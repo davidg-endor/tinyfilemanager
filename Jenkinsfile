@@ -8,7 +8,7 @@ pipeline {
         stage('Prepare artifacts') {
             steps {
                 script {
-                    currentBuild.displayName = params.branch + ' - ' + params.version
+                    currentBuild.displayName = params.version
                 }
                 archiveArtifacts artifacts:'assets,Dockerfile,tinyfilemanager.php'
             }
